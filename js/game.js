@@ -4,7 +4,7 @@ class Game
     {
         this.stage = stage;
         this.resources = resources;
-        this.hands = [];
+        this.players = [];
         this.tricks = [];
         this.pile = null;
     }
@@ -16,39 +16,24 @@ class Game
 
         if (players.length == 4)
         {
-            this.hands = [];
-
-            this.hands[0] = new CardDeck(players[0], 1920/2, 1080 - 230/2 - 20, 60, 0);
-            this.hands[0].set_rotation(0);
-
-            this.hands[1] = new CardDeck(players[1], 230/2 + 20, 1080/2, 30, 0);
-            this.hands[1].set_rotation(Math.PI / 2);
-
-            this.hands[2] = new CardDeck(players[2], 1920/2, 230/2 + 20, 30, 0);
-            this.hands[2].set_rotation(Math.PI);
-
-            this.hands[3] = new CardDeck(players[3], 1920-230/2 - 20, 1080/2, 30, 0);
-            this.hands[3].set_rotation(3*Math.PI / 2);
-
-            this.hands[0].add_to_container(this.stage);
-            this.hands[1].add_to_container(this.stage);
-            this.hands[2].add_to_container(this.stage);
-            this.hands[3].add_to_container(this.stage);
-
-            this.tricks = [
-                new CardDeck("", 0, 0, 0, 10),
-                new CardDeck("", 0, 0, 0, 10),
-                new CardDeck("", 0, 0, 0, 10),
-                new CardDeck("", 0, 0, 0, 10)
+            this.players = [
+                new Player(players[0], 1920/2, 1080 - 230/2 - 20, 0, 60),
+                new Player(players[1], 230/2 + 20, 1080/2, Math.PI/2, 30),
+                new Player(players[2], 1920/2, 230/2 + 20, Math.PI, 30),
+                new Player(players[3], 1920-230/2 - 20, 1080/2, 3*Math.PI/2, 30)
             ];
+        }
 
+        for (let i=0; i<this.players.length; i++)
+        {
+            this.players[i].add_to_container(this.stage);
         }
 
         for (let i=0; i<cards_per_player; i++)
         {
-            for (let h=0; h<this.hands.length; h++)
+            for (let h=0; h<this.players.length; h++)
             {
-                this.hands[h].add_card(this.create_card());
+                this.players[h].hand.add_card(this.create_card());
             }
         }
     }
@@ -68,22 +53,22 @@ class Game
     {
         for (let i=0; i<cards.length; i++)
         {
-            this.hands[player].get_card(i).set_texture(this.resources[cards[i]].texture);
+            this.players[player].hand.get_card(i).set_texture(this.resources[cards[i]].texture);
         }
     }
 
     play_card(player, card_index, card_name)
     {
-        let card = this.hands[player].get_card(card_index);
+        let card = this.players[player].hand.get_card(card_index);
         card.set_texture(this.resources[card_name].texture);
         this.pile.add_card(card);
     }
 
     give_trick_to(player)
     {
-        while (this.pile.cards.length > 0)
+        //while (this.pile.cards.length > 0)
         {
-            this.tricks[player].add_card(this.pile.get_card(0));
+            //this.tricks[player].add_card(this.pile.get_card(0));
         }
     }
 
