@@ -11,7 +11,7 @@ class Game
 
     init(players, cards_per_player)
     {
-        this.pile = new CardDeck("", 1920/2, 1080/2, 35, 20);
+        this.pile = new CardDeck(1920/2, 1080/2, 35, 20);
         this.pile.add_to_container(this.stage);
 
         if (players.length == 4)

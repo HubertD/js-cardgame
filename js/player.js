@@ -14,7 +14,7 @@ class Player
         this.text.anchor.y = 0.5;
         this.container.addChild(this.text);
 
-        this.hand = new CardDeck("", 0, 0, cardOffsetX, 0);
+        this.hand = new CardDeck(0, 0, cardOffsetX, 0);
         this.hand.add_to_container(this.container);
 
         this.update();

@@ -1,32 +1,19 @@
 class CardDeck
 {
-    constructor(name, x, y, offsetX, offsetY)
+    constructor(x, y, offsetX, offsetY)
     {
-        this.name = name;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.cards = [];
+
         this.container = new PIXI.Container();
         this.container.x = x;
         this.container.y = y;
-        this.text = new PIXI.Text(name, { fontFamily : 'Wizzta', fontSize: 50, fill : 0xE01010, align : 'center'});
-        this.text.y = -150;
-        this.text.anchor.x = 0.5;
-        this.text.anchor.y = 0.5;
-        this.container.addChild(this.text);
-
-        this.bg = new PIXI.Sprite(PIXI.Texture.WHITE);
-        //this.container.addChild(this.bg);
     }
 
     add_to_container(to_container)
     {
         to_container.addChild(this.container);
-    }
-
-    set_rotation(r)
-    {
-        this.container.rotation = r;
     }
 
     add_card(card)
@@ -63,10 +50,6 @@ class CardDeck
 
         let width = this.offsetX*(this.cards.length-1) + this.cards[0].get_width();
         let height = this.offsetY*(this.cards.length-1) + this.cards[0].get_height();
-        this.bg.x = -width/2;
-        this.bg.y = -height/2;
-        this.bg.width = width;
-        this.bg.height = height;
 
         for (let i=0; i<this.cards.length; i++)
         {
