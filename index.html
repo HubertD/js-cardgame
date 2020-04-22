@@ -1,0 +1,151 @@
+<html>
+    <head>
+        <style>
+            * {padding: 0; margin: 0}
+            @font-face {
+                font-family: "Wizzta";
+                src: url("wizzta-vada-webfont.woff2") format("woff2"),
+                     url("wizzta-vada-webfont.woff") format("woff");
+            }
+        </style>
+
+    </head>
+    <body>
+        <div style="font-family:Wizzta; font-size:100px"></div>
+        <script src="pixi.min.js"></script>
+        <script src="js/card.js"></script>
+        <script src="js/carddeck.js"></script>
+        <script src="js/game.js"></script>
+
+<script>
+
+function easeCubicIn(t)
+{
+    return Math.pow(t,3);
+}
+
+function easeCubicInOut(t)
+{
+    if (t < 0.5)
+    {
+        return easeCubicIn(t*2.0)/2.0;
+    }
+    else
+    {
+        return 1 - easeCubicIn((1-t)*2)/2;
+    }
+ }
+
+let game = null;
+
+window.onload = function()
+{
+    PIXI.AbstractRenderer.autoDensity = true;
+    let app = new PIXI.Application({});
+    app.renderer.view.style.position = "absolute";
+    app.renderer.view.style.display = "block";
+
+    function resize()
+    {
+        let width = 1920;
+        let height = 1080;
+        let w = window.innerWidth;
+        let h = window.innerHeight;
+        let scale = Math.min(w/width, h/height)
+        app.stage.scale.x = scale;
+        app.stage.scale.y = scale;
+        app.renderer.resize(w, h);
+    }
+
+    resize();
+    window.addEventListener("resize", resize);
+
+
+    //app.renderer.resize(window.innerWidth, window.innerHeight);
+    app.renderer.backgroundColor = 0x222222;
+    document.body.appendChild(app.view);
+    let loader = PIXI.Loader.shared;
+
+    let cards = {};
+
+    for (let i = 0; i < 14; i++) {
+        ["r", "g", "b", "y"].forEach(function (c) {
+            let name = c + ((i < 10) ? "0" + i : i);
+            cards[name] = new Card(name);
+        });
+    }
+    for (let i = 1; i < 5; i++) {
+        cards["z" + i] = new Card("z" + i);
+        cards["n" + i] = new Card("n" + i);
+    }
+
+    loader.add("mask", "deck/mask.png");
+    loader.add("back", "deck/back1.jpg");
+    for (let name in cards) {
+        loader.add(name, "deck/" + name + ".jpg");
+    }
+
+    loader.load(function(loader, resources)
+    {
+        game = new Game(app.stage, resources);
+        game.init(['Hubert', 'Struppi', 'Patrice', 'Steffi'], 5);
+        game.play_card(0, 0, "z1");
+
+
+/*
+        let deck = new CardDeck("", 1920/2, 1080/2, 40);
+        deck.set_visible(true);
+        deck.add_to_container(app.stage);
+
+        for (let name in cards) {
+            cards[name].set_texture(resources[name].texture, resources["back"].texture, resources["mask"].texture);
+            cards[name].set_click_handler(function() {
+                this.set_click_handler(null);
+                deck.add_card(this);
+            });
+        }
+
+        let myhand = new CardDeck("myself", 1920/2, 950, 60);
+        myhand.set_visible(true);
+        myhand.add_to_container(app.stage);
+
+        let p1 = new CardDeck("Player Left", 200, 1080/2, 30);
+        p1.set_visible(false);
+        p1.set_rotation(Math.PI / 2);
+        p1.add_to_container(app.stage);
+
+        let p2 = new CardDeck("Player Right", 1720, 1080/2, 30);
+        p2.set_visible(false);
+        p2.set_rotation(3*Math.PI / 2);
+        p2.add_to_container(app.stage);
+
+        let p3 = new CardDeck("Player Top", 1920/2, 140, 30);
+        p3.set_visible(false);
+        p3.set_rotation(Math.PI);
+        p3.add_to_container(app.stage);
+
+        let hands = [myhand, p1, p2, p3];
+
+        let stack = [];
+        for (let name in cards)
+        {
+            stack.push(cards[name]);
+        }
+        stack.sort(function() { return Math.random() - 0.5; });
+
+        for (let i=0; i<11; i++)
+        {
+            for (let h=0; h<hands.length; h++)
+            {
+                let card = stack.pop();
+                hands[h].add_card(card);
+            }
+        }
+        */
+    });
+};
+
+</script>
+
+    </body>
+</html>
