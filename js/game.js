@@ -8,7 +8,7 @@ class Game
         this.pile = null;
     }
 
-    init(players, cards_per_player)
+    init(players)
     {
         this.pile = new CardDeck(1920/2, 1080/2, 35, 20, 1.0);
         this.pile.add_to_container(this.stage);
@@ -27,20 +27,23 @@ class Game
         {
             this.players[i].add_to_container(this.stage);
         }
+    }
 
-        for (let i=0; i<cards_per_player; i++)
+    give_round(own_cards)
+    {
+        for (let i=0; i<own_cards.length; i++)
         {
             for (let h=0; h<this.players.length; h++)
             {
-                this.players[h].hand.add_card(this.create_card());
+                this.players[h].hand.add_card(this.create_card((h==0) ? own_cards[i] : "back"));
             }
         }
     }
 
-    create_card()
+    create_card(resource_name)
     {
         let self = this;
-        let card = new Card(this.resources["back"].texture, this.resources["mask"].texture);
+        let card = new Card(this.resources[resource_name].texture, this.resources["mask"].texture);
         card.set_click_handler(function() {
             this.set_click_handler(null);
             self.pile.add_card(this);
