@@ -84,7 +84,9 @@ window.onload = function()
     {
         game = new Game(app.stage, resources);
         game.init(['Hubert', 'Struppi', 'Patrice', 'Steffi'], 5);
-        game.play_card(0, 0, "z1");
+        game.show_cards(0, ["z3", "b04", "r08", "g12", "y13"]);
+        game.play_card(0, 0, "y13");
+        game.play_card(1, 0, "z1");
     });
 };
 

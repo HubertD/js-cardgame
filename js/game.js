@@ -64,6 +64,14 @@ class Game
         return card;
     }
 
+    show_cards(player, cards)
+    {
+        for (let i=0; i<cards.length; i++)
+        {
+            this.hands[player].get_card(i).set_texture(this.resources[cards[i]].texture);
+        }
+    }
+
     play_card(player, card_index, card_name)
     {
         let card = this.hands[player].get_card(card_index);
