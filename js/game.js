@@ -5,13 +5,12 @@ class Game
         this.stage = stage;
         this.resources = resources;
         this.players = [];
-        this.tricks = [];
         this.pile = null;
     }
 
     init(players, cards_per_player)
     {
-        this.pile = new CardDeck(1920/2, 1080/2, 35, 20);
+        this.pile = new CardDeck(1920/2, 1080/2, 35, 20, 1.0);
         this.pile.add_to_container(this.stage);
 
         if (players.length == 4)
@@ -66,10 +65,7 @@ class Game
 
     give_trick_to(player)
     {
-        //while (this.pile.cards.length > 0)
-        {
-            //this.tricks[player].add_card(this.pile.get_card(0));
-        }
+        this.players[player].give_trick(this.pile);
     }
 
 }

@@ -1,6 +1,6 @@
 class CardDeck
 {
-    constructor(x, y, offsetX, offsetY)
+    constructor(x, y, offsetX, offsetY, scale)
     {
         this.offsetX = offsetX;
         this.offsetY = offsetY;
@@ -9,6 +9,8 @@ class CardDeck
         this.container = new PIXI.Container();
         this.container.x = x;
         this.container.y = y;
+        this.container.scale.x = scale;
+        this.container.scale.y = scale;
     }
 
     add_to_container(to_container)
