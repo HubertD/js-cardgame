@@ -12,7 +12,6 @@ class Game
     init(players, cards_per_player)
     {
         this.pile = new CardDeck("", 1920/2, 1080/2, 40);
-        this.pile.set_visible(true);
         this.pile.add_to_container(this.stage);
 
         if (players.length == 4)
@@ -57,13 +56,7 @@ class Game
     create_card()
     {
         let self = this;
-        let card = new Card("");
-        card.set_texture(
-            this.resources["back"].texture,
-            this.resources["back"].texture,
-            this.resources["mask"].texture
-        );
-
+        let card = new Card(this.resources["back"].texture, this.resources["mask"].texture);
         card.set_click_handler(function() {
             this.set_click_handler(null);
             self.pile.add_card(this);
@@ -74,7 +67,7 @@ class Game
     play_card(player, card_index, card_name)
     {
         let card = this.hands[player].get_card(card_index);
-        card.set_front_texture(this.resources[card_name].texture);
+        card.set_texture(this.resources[card_name].texture);
         this.pile.add_card(card);
     }
 

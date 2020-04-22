@@ -1,19 +1,14 @@
 class Card
 {
-    constructor(name)
-    {
-        this.name = name;
-        this.container = null;
-        this.front = null;
-        this.back = null;
-        this.mask = null;
-        this.visible = false;
-        this.parent = null;
-    }
-
-    set_texture(front_texture, back_texture, mask)
+    constructor(texture, mask)
     {
         let self = this;
+
+        this.container = null;
+        this.image = null;
+        this.mask = null;
+        this.parent = null;
+
         this.container = new PIXI.Container();
         this.container.on('mousedown', function() { self.onclick(); });
         this.container.on('touchstart', function() { self.onclick(); });
@@ -23,36 +18,19 @@ class Card
         this.mask.anchor.y = 0.5;
         this.container.addChild(this.mask);
 
-        this.front = new PIXI.Sprite(front_texture);
-        this.front.x = 0;
-        this.front.y = 0;
-        this.front.anchor.y = 0.5;
-        this.front.anchor.x = 0.5;
-        this.front.mask = this.mask;
+        this.image = new PIXI.Sprite(texture);
+        this.image.x = 0;
+        this.image.y = 0;
+        this.image.anchor.y = 0.5;
+        this.image.anchor.x = 0.5;
+        this.image.mask = this.mask;
 
-        this.back = new PIXI.Sprite(back_texture);
-        this.back.x = 0;
-        this.back.y = 0;
-        this.back.anchor.y = 0.5;
-        this.back.anchor.x = 0.5;
-        this.back.mask = this.mask;
-
-        this.container.addChild(this.front);
-        this.container.addChild(this.back);
-
-        this.set_visible(this.visible);
+        this.container.addChild(this.image);
     }
 
-    set_front_texture(front_texture)
+    set_texture(texture)
     {
-        this.front.texture = front_texture;
-    }
-
-    set_visible(visible)
-    {
-        this.visible = visible;
-        this.front.visible = this.visible;
-        this.back.visible = !this.visible;
+        this.image.texture = texture;
     }
 
     add_to_container(to_container)
@@ -64,11 +42,6 @@ class Card
     {
         this.container.x = x;
         this.container.y = y;
-    }
-
-    set_rotation(r)
-    {
-        this.container.rotation = r;
     }
 
     set_click_handler(handler)

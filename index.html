@@ -60,29 +60,24 @@ window.onload = function()
     resize();
     window.addEventListener("resize", resize);
 
-
-    //app.renderer.resize(window.innerWidth, window.innerHeight);
     app.renderer.backgroundColor = 0x222222;
+    document.body.appendChild(app.view);
     document.body.appendChild(app.view);
     let loader = PIXI.Loader.shared;
 
-    let cards = {};
+    loader.add("mask", "deck/mask.png");
+    loader.add("back", "deck/back1.jpg");
 
     for (let i = 0; i < 14; i++) {
         ["r", "g", "b", "y"].forEach(function (c) {
             let name = c + ((i < 10) ? "0" + i : i);
-            cards[name] = new Card(name);
+            loader.add(name, "deck/" + name + ".jpg");
         });
     }
-    for (let i = 1; i < 5; i++) {
-        cards["z" + i] = new Card("z" + i);
-        cards["n" + i] = new Card("n" + i);
-    }
 
-    loader.add("mask", "deck/mask.png");
-    loader.add("back", "deck/back1.jpg");
-    for (let name in cards) {
-        loader.add(name, "deck/" + name + ".jpg");
+    for (let i = 1; i < 5; i++) {
+        loader.add("z" + i, "deck/z" + i + ".jpg");
+        loader.add("n" + i, "deck/n" + i + ".jpg");
     }
 
     loader.load(function(loader, resources)
@@ -90,58 +85,6 @@ window.onload = function()
         game = new Game(app.stage, resources);
         game.init(['Hubert', 'Struppi', 'Patrice', 'Steffi'], 5);
         game.play_card(0, 0, "z1");
-
-
-/*
-        let deck = new CardDeck("", 1920/2, 1080/2, 40);
-        deck.set_visible(true);
-        deck.add_to_container(app.stage);
-
-        for (let name in cards) {
-            cards[name].set_texture(resources[name].texture, resources["back"].texture, resources["mask"].texture);
-            cards[name].set_click_handler(function() {
-                this.set_click_handler(null);
-                deck.add_card(this);
-            });
-        }
-
-        let myhand = new CardDeck("myself", 1920/2, 950, 60);
-        myhand.set_visible(true);
-        myhand.add_to_container(app.stage);
-
-        let p1 = new CardDeck("Player Left", 200, 1080/2, 30);
-        p1.set_visible(false);
-        p1.set_rotation(Math.PI / 2);
-        p1.add_to_container(app.stage);
-
-        let p2 = new CardDeck("Player Right", 1720, 1080/2, 30);
-        p2.set_visible(false);
-        p2.set_rotation(3*Math.PI / 2);
-        p2.add_to_container(app.stage);
-
-        let p3 = new CardDeck("Player Top", 1920/2, 140, 30);
-        p3.set_visible(false);
-        p3.set_rotation(Math.PI);
-        p3.add_to_container(app.stage);
-
-        let hands = [myhand, p1, p2, p3];
-
-        let stack = [];
-        for (let name in cards)
-        {
-            stack.push(cards[name]);
-        }
-        stack.sort(function() { return Math.random() - 0.5; });
-
-        for (let i=0; i<11; i++)
-        {
-            for (let h=0; h<hands.length; h++)
-            {
-                let card = stack.pop();
-                hands[h].add_card(card);
-            }
-        }
-        */
     });
 };
 
