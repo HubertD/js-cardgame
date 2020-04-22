@@ -20,23 +20,6 @@
 
 <script>
 
-function easeCubicIn(t)
-{
-    return Math.pow(t,3);
-}
-
-function easeCubicInOut(t)
-{
-    if (t < 0.5)
-    {
-        return easeCubicIn(t*2.0)/2.0;
-    }
-    else
-    {
-        return 1 - easeCubicIn((1-t)*2)/2;
-    }
- }
-
 let game = null;
 
 window.onload = function()
@@ -58,29 +41,30 @@ window.onload = function()
         app.renderer.resize(w, h);
     }
 
+    function addResources(loader)
+    {
+        loader.add("mask", "deck/mask.png");
+        loader.add("back", "deck/back1.jpg");
+        for (let i = 0; i < 14; i++) {
+            ["r", "g", "b", "y"].forEach(function (c) {
+                let name = c + ((i < 10) ? "0" + i : i);
+                loader.add(name, "deck/" + name + ".jpg");
+            });
+        }
+        for (let i = 1; i < 5; i++) {
+            loader.add("z" + i, "deck/z" + i + ".jpg");
+            loader.add("n" + i, "deck/n" + i + ".jpg");
+        }
+    }
+
     resize();
     window.addEventListener("resize", resize);
 
     app.renderer.backgroundColor = 0x222222;
     document.body.appendChild(app.view);
-    document.body.appendChild(app.view);
+
     let loader = PIXI.Loader.shared;
-
-    loader.add("mask", "deck/mask.png");
-    loader.add("back", "deck/back1.jpg");
-
-    for (let i = 0; i < 14; i++) {
-        ["r", "g", "b", "y"].forEach(function (c) {
-            let name = c + ((i < 10) ? "0" + i : i);
-            loader.add(name, "deck/" + name + ".jpg");
-        });
-    }
-
-    for (let i = 1; i < 5; i++) {
-        loader.add("z" + i, "deck/z" + i + ".jpg");
-        loader.add("n" + i, "deck/n" + i + ".jpg");
-    }
-
+    addResources(loader);
     loader.load(function(loader, resources)
     {
         game = new Game(app.stage, resources);
