@@ -11,23 +11,23 @@ class Game
 
     init(players, cards_per_player)
     {
-        this.pile = new CardDeck("", 1920/2, 1080/2, 40);
+        this.pile = new CardDeck("", 1920/2, 1080/2, 35, 20);
         this.pile.add_to_container(this.stage);
 
         if (players.length == 4)
         {
             this.hands = [];
 
-            this.hands[0] = new CardDeck(players[0], 1920/2, 950, 60);
+            this.hands[0] = new CardDeck(players[0], 1920/2, 1080 - 230/2 - 20, 60, 0);
             this.hands[0].set_rotation(0);
 
-            this.hands[1] = new CardDeck(players[1], 200, 1080/2, 30);
+            this.hands[1] = new CardDeck(players[1], 230/2 + 20, 1080/2, 30, 0);
             this.hands[1].set_rotation(Math.PI / 2);
 
-            this.hands[2] = new CardDeck(players[2], 1920/2, 140, 30);
+            this.hands[2] = new CardDeck(players[2], 1920/2, 230/2 + 20, 30, 0);
             this.hands[2].set_rotation(Math.PI);
 
-            this.hands[3] = new CardDeck(players[3], 1720, 1080/2, 30);
+            this.hands[3] = new CardDeck(players[3], 1920-230/2 - 20, 1080/2, 30, 0);
             this.hands[3].set_rotation(3*Math.PI / 2);
 
             this.hands[0].add_to_container(this.stage);
@@ -36,10 +36,10 @@ class Game
             this.hands[3].add_to_container(this.stage);
 
             this.tricks = [
-                new CardDeck("", 0, 0, 0),
-                new CardDeck("", 0, 0, 0),
-                new CardDeck("", 0, 0, 0),
-                new CardDeck("", 0, 0, 0)
+                new CardDeck("", 0, 0, 0, 10),
+                new CardDeck("", 0, 0, 0, 10),
+                new CardDeck("", 0, 0, 0, 10),
+                new CardDeck("", 0, 0, 0, 10)
             ];
 
         }

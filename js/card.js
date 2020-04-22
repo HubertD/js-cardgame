@@ -14,18 +14,24 @@ class Card
         this.container.on('touchstart', function() { self.onclick(); });
 
         this.mask = new PIXI.Sprite(mask);
-        this.mask.anchor.x = 0.5;
-        this.mask.anchor.y = 0.5;
         this.container.addChild(this.mask);
 
         this.image = new PIXI.Sprite(texture);
         this.image.x = 0;
         this.image.y = 0;
-        this.image.anchor.y = 0.5;
-        this.image.anchor.x = 0.5;
         this.image.mask = this.mask;
 
         this.container.addChild(this.image);
+    }
+
+    get_width()
+    {
+        return this.image.width;
+    }
+
+    get_height()
+    {
+        return this.image.height;
     }
 
     set_texture(texture)

@@ -1,9 +1,10 @@
 class CardDeck
 {
-    constructor(name, x, y, distance)
+    constructor(name, x, y, offsetX, offsetY)
     {
         this.name = name;
-        this.distance = distance;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
         this.cards = [];
         this.container = new PIXI.Container();
         this.container.x = x;
@@ -13,6 +14,9 @@ class CardDeck
         this.text.anchor.x = 0.5;
         this.text.anchor.y = 0.5;
         this.container.addChild(this.text);
+
+        this.bg = new PIXI.Sprite(PIXI.Texture.WHITE);
+        //this.container.addChild(this.bg);
     }
 
     add_to_container(to_container)
@@ -46,16 +50,27 @@ class CardDeck
 
     remove_card(card)
     {
-        this.cards = this.cards.filter(function(c) { return c!=card; });
+        this.cards = this.cards.filter(function(c) { return c != card; });
         card.parent = null;
     }
 
     update_positions()
     {
-        let width = this.distance*(this.cards.length-1);
+        if (this.cards.length == 0)
+        {
+            return;
+        }
+
+        let width = this.offsetX*(this.cards.length-1) + this.cards[0].get_width();
+        let height = this.offsetY*(this.cards.length-1) + this.cards[0].get_height();
+        this.bg.x = -width/2;
+        this.bg.y = -height/2;
+        this.bg.width = width;
+        this.bg.height = height;
+
         for (let i=0; i<this.cards.length; i++)
         {
-            this.cards[i].set_position((i*this.distance) - (width/2), 0);
+            this.cards[i].set_position((i*this.offsetX) - (width/2), (i*this.offsetY) - (height/2));
         }
     }
 }
