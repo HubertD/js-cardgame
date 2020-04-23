@@ -13,13 +13,49 @@ class Game
         this.pile = new CardDeck(1920/2, 1080/2, 35, 20, 1.0);
         this.pile.add_to_container(this.stage);
 
-        if (players.length == 4)
+        if (players.length == 2)
+        {
+            this.players = [
+                new Player(players[0], 1920/2, 1080 - 230/2 - 20, 0, 60),
+                new Player(players[1], 1920/2, 230/2 + 20, Math.PI, 30),
+            ];
+        }
+        if (players.length == 3)
+        {
+            this.players = [
+                new Player(players[0], 1920/2, 1080 - 230/2 - 20, 0, 60),
+                new Player(players[1], 500, 250, 4*Math.PI/5, 30),
+                new Player(players[2], 1920 - 500, 250, 6*Math.PI/5, 30),
+            ];
+        }
+        else if (players.length == 4)
         {
             this.players = [
                 new Player(players[0], 1920/2, 1080 - 230/2 - 20, 0, 60),
                 new Player(players[1], 230/2 + 20, 1080/2, Math.PI/2, 30),
                 new Player(players[2], 1920/2, 230/2 + 20, Math.PI, 30),
                 new Player(players[3], 1920-230/2 - 20, 1080/2, 3*Math.PI/2, 30)
+            ];
+        }
+        else if (players.length == 5)
+        {
+            this.players = [
+                new Player(players[0], 1920/2, 1080 - 230/2 - 20, 0, 50),
+                new Player(players[1], 500, 650, 2/5*Math.PI, 20),
+                new Player(players[2], 650, 150, 4/5*Math.PI, 20),
+                new Player(players[3], 1920 - 650, 150, 6/5*Math.PI, 20),
+                new Player(players[4], 1920-500, 650, 8/5*Math.PI, 20)
+            ];
+        }
+        else if (players.length == 6)
+        {
+            this.players = [
+                new Player(players[0],   1920/2, 945, 0, 50),
+                new Player(players[1],      500, 700, 2/6*Math.PI, 20),
+                new Player(players[2],      500, 250, 4/6*Math.PI, 20),
+                new Player(players[3],   1920/2,  30, 6/6*Math.PI, 20),
+                new Player(players[4], 1920-500, 250, 8/6*Math.PI, 20),
+                new Player(players[5], 1920-500, 700, 10/6*Math.PI, 20)
             ];
         }
 

@@ -68,12 +68,14 @@ window.onload = function()
     loader.load(function(loader, resources)
     {
         game = new Game(app.stage, resources);
-        game.init(['Hubert', 'Struppi', 'Patrice', 'Steffi']);
-        game.give_round(["z3", "b04", "r08", "g12", "y13"]);
+        game.init(['Hubert', 'Struppi', 'Patrice', 'Steffi', "Max", "Renate"]);
+        game.give_round(["z3", "b04", "r08", "g12", "y13", "r02", "b05", "b02", "b03", "g03", "g05"]);
         game.play_card(0, 0, "z3");
         game.play_card(1, 0, "y13");
         game.play_card(2, 0, "b02");
         game.play_card(3, 0, "r02");
+        game.play_card(4, 0, "y05");
+        game.play_card(5, 0, "g05");
         game.give_trick_to(0);
     });
 };

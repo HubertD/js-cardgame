@@ -11,7 +11,7 @@ class Player
         this.container.rotation = rotation;
 
         this.text = new PIXI.Text("", { fontFamily : 'Wizzta', fontSize: 50, fill : 0xE01010, align : 'center'});
-        this.text.y = -175;
+        this.text.y = -155;
         this.text.anchor.x = 0.5;
         this.text.anchor.y = 0.5;
         this.container.addChild(this.text);
@@ -22,8 +22,8 @@ class Player
         this.tricks = [];
         for (let i=0; i<6; i++)
         {
-            this.add_trick(-150 - i*50);
-            this.add_trick(150 + i*50);
+            this.add_trick(-120 - i*50);
+            this.add_trick(120 + i*50);
         }
 
         this.update();
