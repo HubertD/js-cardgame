@@ -31,30 +31,45 @@ class Game
 
     give_round(own_cards)
     {
+        let self = this;
+
         for (let i=0; i<own_cards.length; i++)
         {
-            for (let h=0; h<this.players.length; h++)
+            let name = own_cards[i];
+            let card = this.create_card(name);
+            card.set_click_handler(function() {
+                console.log("play card " + name);
+                self.play(card);
+            });
+            this.players[0].hand.add_card(card);
+
+            for (let h=1; h<this.players.length; h++)
             {
-                this.players[h].hand.add_card(this.create_card((h==0) ? own_cards[i] : "back"));
+                this.players[h].hand.add_card(
+                    this.create_card("back")
+                );
             }
         }
     }
 
     create_card(resource_name)
     {
-        let self = this;
-        let card = new Card(this.resources[resource_name].texture, this.resources["mask"].texture);
-        card.set_click_handler(function() {
-            this.set_click_handler(null);
-            self.pile.add_card(this);
-        });
-        return card;
+        return new Card(
+            this.resources[resource_name].texture,
+            this.resources["mask"].texture
+        );
     }
 
     play_card(player, card_index, card_name)
     {
         let card = this.players[player].hand.get_card(card_index);
         card.set_texture(this.resources[card_name].texture);
+        this.play(card);
+    }
+
+    play(card)
+    {
+        card.set_click_handler(null);
         this.pile.add_card(card);
     }
 
